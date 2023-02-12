@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Start {
 
     public static void main(String[] args) {
-        Graph<String, DefaultEdge> graph = new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
+        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
         String you = "you";
         String alice = "alice";
         String bob = "bob";
@@ -38,6 +38,6 @@ public class Start {
         graph.addEdge(claire, jonny);
 
         BreadthSearchAlgorithm breadthSearchAlgorithm = new BreadthSearchAlgorithm();
-        breadthSearchAlgorithm.searchInBreadth(graph, "e");
+        breadthSearchAlgorithm.searchInBreadth(graph, "m");
     }
 }

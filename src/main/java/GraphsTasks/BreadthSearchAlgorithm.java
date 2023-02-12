@@ -1,7 +1,6 @@
 package GraphsTasks;
 
 import org.jgrapht.Graph;
-
 import java.util.*;
 
 public class BreadthSearchAlgorithm {
@@ -10,10 +9,8 @@ public class BreadthSearchAlgorithm {
         boolean result = false;
         ArrayDeque<String> searchQueue = new ArrayDeque();
         searchQueue.addAll(names.vertexSet());
-        //searchQueue.addAll(Collections.singleton(names));
         ArrayList<String> searched = new ArrayList<>();
         for (String name : searchQueue) {
-            //Object person = name;
             if (!searched.contains(name)) {
                 if (isSeller(String.valueOf(name), condition)) {
                     System.out.println(name + " is a mango seller!");
