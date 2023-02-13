@@ -1,43 +1,19 @@
-import GraphsTasks.BreadthSearchAlgorithm;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import GraphsTasks.BreadthFirstSearchAlgorithm;
+import Models.BFSConditionModel;
+import Utils.GraphUtils.GraphManager;
+import static Utils.JsonUtils.JsonManager.gsonModelParser;
+import static Utils.JsonUtils.Paths.FilePaths.BFS_CONDITION_FILEPATH;
 
 public class Start {
 
+    private static final BFSConditionModel BFS_CONDITION = (BFSConditionModel) gsonModelParser(BFS_CONDITION_FILEPATH, BFSConditionModel.class);
+
     public static void main(String[] args) {
-        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-        String you = "you";
-        String alice = "alice";
-        String bob = "bob";
-        String claire = "claire";
-        String anuj = "anuj";
-        String peggy = "peggy";
-        String thom = "thom";
-        String jonny = "jonny";
-
-        graph.addVertex(you);
-        graph.addVertex(alice);
-        graph.addVertex(bob);
-        graph.addVertex(claire);
-        graph.addVertex(anuj);
-        graph.addVertex(peggy);
-        graph.addVertex(thom);
-        graph.addVertex(jonny);
-
-        graph.addEdge(you, alice);
-        graph.addEdge(you, bob);
-        graph.addEdge(you, claire);
-        graph.addEdge(bob, anuj);
-        graph.addEdge(bob, peggy);
-        graph.addEdge(alice, peggy);
-        graph.addEdge(claire, thom);
-        graph.addEdge(claire, jonny);
-
-        BreadthSearchAlgorithm breadthSearchAlgorithm = new BreadthSearchAlgorithm();
-        breadthSearchAlgorithm.searchInBreadth(graph, "m");
+        BreadthFirstSearchAlgorithm breadthSearchAlgorithm = new BreadthFirstSearchAlgorithm();
+        breadthSearchAlgorithm.searchInBreadth(
+                GraphManager.generateGraph(),
+                BFS_CONDITION.getCondition(),
+                BFS_CONDITION.getConditionSuccessfulMessage()
+        );
     }
 }
