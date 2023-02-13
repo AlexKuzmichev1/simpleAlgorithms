@@ -1,6 +1,8 @@
 import GraphsTasks.BreadthFirstSearchAlgorithm;
 import Models.BFSConditionModel;
 import Utils.GraphUtils.GraphManager;
+import Utils.GraphUtils.WeightedGraphManager;
+
 import static Utils.JsonUtils.JsonManager.gsonModelParser;
 import static Utils.JsonUtils.Paths.FilePaths.BFS_CONDITION_FILEPATH;
 
@@ -15,5 +17,7 @@ public class Start {
                 BFS_CONDITION.getCondition(),
                 BFS_CONDITION.getConditionSuccessfulMessage()
         );
+
+        WeightedGraphManager.generateWeightedGraph();
     }
 }
