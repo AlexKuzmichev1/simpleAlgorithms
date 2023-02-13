@@ -1,7 +1,6 @@
 package Utils.JsonUtils;
 
 import com.google.gson.*;
-
 import java.io.FileReader;
 import java.lang.reflect.Type;
 

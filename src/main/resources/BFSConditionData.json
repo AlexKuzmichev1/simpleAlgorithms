@@ -1,4 +1,5 @@
 {
-  "condition": "m",
+  "condition" : "m",
+  "failureCondition" : "1",
   "conditionSuccessfulMessage" : " is a mango seller!"
 }

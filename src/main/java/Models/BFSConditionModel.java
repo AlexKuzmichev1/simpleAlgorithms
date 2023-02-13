@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class BFSConditionModel {
 
     private String condition;
+    private String failureCondition;
     private String conditionSuccessfulMessage;
 }
