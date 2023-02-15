@@ -1,0 +1,5 @@
+{
+  "conditionMessage" : "Shortest path from %s to %s:",
+  "startPoint" : "you",
+  "endPoint" : "peggy"
+}
