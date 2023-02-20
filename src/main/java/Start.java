@@ -1,3 +1,4 @@
+import ApproxiAlgoTasks.GreedyAlgorithm;
 import GraphsTasks.BreadthFirstSearchAlgorithm;
 import GraphsTasks.DijkstraAlgorithm;
 import Models.BFSConditionModel;
@@ -19,5 +20,8 @@ public class Start {
 
         var dijkstraAlgorithm = new DijkstraAlgorithm();
         dijkstraAlgorithm.searchCheapestRoute(GraphManager.generateWeightedGraph());
+
+        var greedyAlgorithm = new GreedyAlgorithm();
+        System.out.println(greedyAlgorithm.findBestCoveredRadioStations());
     }
 }

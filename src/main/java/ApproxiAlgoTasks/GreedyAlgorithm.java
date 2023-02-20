@@ -1,59 +1,62 @@
 package ApproxiAlgoTasks;
 
+import Models.CountryStatesModel;
+import Models.RadioStationModel;
+import Utils.JsonUtils.Paths.FilePaths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
+import static Utils.JsonUtils.JsonManager.gsonModelParser;
+import static Utils.JsonUtils.Paths.FilePaths.RADIO_STATIONS_FILEPATH;
 
 public class GreedyAlgorithm {
 
-    private HashSet<String> finalStations = new HashSet<>();
+    private static final RadioStationModel RADIO = (RadioStationModel)
+            gsonModelParser(RADIO_STATIONS_FILEPATH, RadioStationModel.class);
+    private static final CountryStatesModel STATES = (CountryStatesModel)
+            gsonModelParser(FilePaths.COUNTRY_STATES_FILEPATH, CountryStatesModel.class);
 
-    private HashSet<String> generateStates(String[] baseStates) {
-        HashSet<String> states = new HashSet<>();
-        for (String state : baseStates) {
-            states.add(state);
-        }
-        return states;
+
+    private HashSet<String> generateStatesSet() {
+        HashSet<String> statesNeeded = new HashSet<>();
+        statesNeeded.addAll(
+                Arrays.asList(
+                        STATES.getMt(), STATES.getWa(),
+                        STATES.getOr(), STATES.getId(), STATES.getNv(),
+                        STATES.getUt(), STATES.getCa(), STATES.getAz()
+                )
+        );
+        return statesNeeded;
     }
 
-    private HashSet<String> generateRadioStations(String[] baseStations) {
-        HashSet<String> stations = new HashSet<>();
-        for (String station : baseStations) {
-            stations.add(station);
-        }
+    private HashMap<String, HashSet<String>> generateRadioStationsCoverage() {
+        HashMap<String, HashSet<String>> stations = new HashMap<>();
+        stations.put(RADIO.getKone(), new HashSet(Arrays.asList(STATES.getId(), STATES.getNv(), STATES.getUt())));
+        stations.put(RADIO.getKtwo(), new HashSet(Arrays.asList(STATES.getWa(), STATES.getId(), STATES.getMt())));
+        stations.put(RADIO.getKthree(), new HashSet(Arrays.asList(STATES.getOr(), STATES.getNv(), STATES.getCa())));
+        stations.put(RADIO.getKfour(), new HashSet(Arrays.asList(STATES.getNv(), STATES.getUt())));
+        stations.put(RADIO.getKfive(), new HashSet(Arrays.asList(STATES.getCa(), STATES.getAz())));
         return stations;
     }
 
-    private HashMap<String, String[]> generateRadioStationsCoverage() {
-        HashMap<String, String[]> stations = new HashMap<>();
-        stations.put("kone", new String[]{"id", "nv", "ut"});
-        stations.put("ktwo", new String[]{"wa", "id", "mt"});
-        stations.put("kthree", new String[]{"or", "nv", "ca"});
-        stations.put("kfour", new String[]{"nv", "ut"});
-        stations.put("kfive", new String[]{"ca", "az"});
-        return stations;
-    }
-
-    public HashMap<String, String[]> findBestCoveredRadioStations(HashSet<String> states, HashSet<String> stations, HashMap<String, String[]> stationsWithCoverage) {
-        HashMap<String, String[]> finalStations = new HashMap<>();
-        HashSet<String> statesNeeded = states;
+    public HashSet<String> findBestCoveredRadioStations() {
+        HashSet<String> statesNeeded = generateStatesSet();
+        HashMap<String, HashSet<String>> stations = generateRadioStationsCoverage();
+        HashSet<String> finalStations = new HashSet();
         while (!statesNeeded.isEmpty()) {
-            HashMap<String, String[]> bestStation = new HashMap<>();
-            HashSet<String> statesCovered = new HashSet<>();
-            for (String station : stations) {
-                HashSet<String> statesFromStation = generateStates(stationsWithCoverage.get(station));
-                HashSet<String> covered = new HashSet<>();
-                covered.addAll(statesNeeded);
-                covered.addAll(statesFromStation);
+            String bestStation = null;
+            HashSet<String> statesCovered = new HashSet();
+            for (String station: stations.keySet()) {
+                HashSet covered = new HashSet(statesNeeded);
+                covered.retainAll(stations.get(station));
                 if (covered.size() > statesCovered.size()) {
-                    bestStation.put(station, (String[]) statesFromStation.toArray());
+                    bestStation = station;
                     statesCovered = covered;
                 }
             }
             statesNeeded.removeAll(statesCovered);
-            finalStations.putAll(bestStation);
+            finalStations.add(bestStation);
         }
-
         return finalStations;
     }
 }

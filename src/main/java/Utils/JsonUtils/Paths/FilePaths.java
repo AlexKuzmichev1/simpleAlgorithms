@@ -11,4 +11,6 @@ public final class FilePaths {
     public static final String GRAPH_FILEPATH = String.format("%sGraphData.json", MAIN_RESOURCES_PATH);
     public static final String GRAPH_WEIGHTS_FILEPATH = String.format("%sGraphWeightsData.json", MAIN_RESOURCES_PATH);
     public static final String DIJKSTRA_CONDITION_FILEPATH = String.format("%sDijkstraConditionData.json", MAIN_RESOURCES_PATH);
+    public static final String RADIO_STATIONS_FILEPATH = String.format("%sRadioStationsData.json", MAIN_RESOURCES_PATH);
+    public static final String COUNTRY_STATES_FILEPATH = String.format("%sCountryStatesData.json", MAIN_RESOURCES_PATH);
 }
