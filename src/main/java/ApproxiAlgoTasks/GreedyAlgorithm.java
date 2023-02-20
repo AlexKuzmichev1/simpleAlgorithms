@@ -15,7 +15,18 @@ public class GreedyAlgorithm {
             gsonModelParser(RADIO_STATIONS_FILEPATH, RadioStationModel.class);
     private static final CountryStatesModel STATES = (CountryStatesModel)
             gsonModelParser(FilePaths.COUNTRY_STATES_FILEPATH, CountryStatesModel.class);
+    private HashSet<String> baseStatesSet = new HashSet<>();
+    private HashMap<String, HashSet<String>> baseStationsSet = new HashMap<>();
 
+    public HashSet<String> getBaseStatesSet() {
+        generateStatesSet();
+        return baseStatesSet;
+    }
+
+    public HashMap<String, HashSet<String>> getBaseStationsSet() {
+        generateRadioStationsCoverage();
+        return baseStationsSet;
+    }
 
     private HashSet<String> generateStatesSet() {
         HashSet<String> statesNeeded = new HashSet<>();
@@ -26,6 +37,7 @@ public class GreedyAlgorithm {
                         STATES.getUt(), STATES.getCa(), STATES.getAz()
                 )
         );
+        baseStatesSet = statesNeeded;
         return statesNeeded;
     }
 
@@ -36,6 +48,7 @@ public class GreedyAlgorithm {
         stations.put(RADIO.getKthree(), new HashSet(Arrays.asList(STATES.getOr(), STATES.getNv(), STATES.getCa())));
         stations.put(RADIO.getKfour(), new HashSet(Arrays.asList(STATES.getNv(), STATES.getUt())));
         stations.put(RADIO.getKfive(), new HashSet(Arrays.asList(STATES.getCa(), STATES.getAz())));
+        baseStationsSet = stations;
         return stations;
     }
 
